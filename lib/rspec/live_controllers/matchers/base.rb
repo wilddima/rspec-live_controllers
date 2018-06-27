@@ -2,14 +2,14 @@ module RSpec
   module LiveControllers
     module Matchers
       class Base
-        attr_reader :actual, :body
-
+        attr_reader :actual, :body, :target
 
         def initialize(actual)
           @actual = actual
         end
 
         def matches?(target)
+          @target = target
           @body = extract_body(target)
           row = target_row(actual)
           json = target_json(actual)
