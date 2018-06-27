@@ -7,11 +7,11 @@ module RSpec
         end
 
         def failure_message
-          "Expect «#{body}» to have chunk: «#{target}»."
+          "Expect «#{response_body}» to have chunk: «#{list_of_matchers.join(' or ')}»."
         end
 
         def failure_message_when_negated
-          "Expect «#{body}» not to have chunk: «#{target}»."
+          "Expect «#{response_body}» not to have chunk: «#{list_of_matchers.join(' or ')}»."
         end
       end
     end

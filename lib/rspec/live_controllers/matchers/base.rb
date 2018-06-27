@@ -2,19 +2,19 @@ module RSpec
   module LiveControllers
     module Matchers
       class Base
-        attr_reader :actual, :body, :target
+        attr_reader :actual_matcher, :response_body, :target_response, :list_of_matchers
 
-        def initialize(actual)
-          @actual = actual
+        def initialize(actual_matcher)
+          @actual_matcher = actual
         end
 
-        def matches?(target)
-          @target = target
-          @body = extract_body(target)
-          row = target_row(actual)
-          json = target_json(actual)
-          string = target_string(actual)
-          check_matches?(body, row, json, string)
+        def matches?(target_response)
+          @target_response = target
+          @response_body = extract_body(target_response)
+          row = target_response_row(actual_matcher)
+          json = target_response_json(actual_matcher)
+          string = target_response_string(actual_matcher)
+          check_matches?(response_body, row, json, string)
         end
 
         def failure_message
@@ -27,22 +27,22 @@ module RSpec
 
         protected
 
-        def target_json(actual)
-          return unless actual.respond_to?(:to_json)
-          actual.to_json
+        def target_response_json(actual_matcher)
+          return unless actual_matcher.respond_to?(:to_json)
+          actual_matcher.to_json
         end
 
-        def target_string(actual)
-          actual.to_s
+        def target_response_string(actual_matcher)
+          actual_matcher.to_s
         end
 
-        def target_row(actual)
-          return actual if actual.is_a?(String) || actual.is_a?(Regexp)
+        def target_response_row(actual_matcher)
+          return actual_matcher if actual.is_a?(String) || actual.is_a?(Regexp)
         end
 
-        def extract_body(target)
-          if target.is_a?(ActionDispatch::Response::Buffer)
-            target.instance_variable_get(:@buf).join('')
+        def extract_response_body(target_response)
+          if target_response.is_a?(ActionDispatch::Response::Buffer)
+            target_response.instance_variable_get(:@buf).join('')
           end
         end
 
@@ -50,10 +50,11 @@ module RSpec
           raise 'Not implemented'
         end
 
-        def check_matches?(body, *matchers)
-          matchers.compact.reduce(false) do |acc, value|
+        def check_matches?(response_body, *matchers)
+          @list_of_matchers = matchers.compact
+          checkers.reduce(false) do |acc, value|
             reg = Regexp.quote(value)
-            acc ||= body.match?(regexp(reg))
+            acc ||= response_body.match?(regexp(reg))
           end
         end
       end
