@@ -1,7 +1,7 @@
-require "rspec/live_controllers/version"
+require 'rspec/live_controllers/version'
+require 'rspec/live_controllers/matchers'
 
-module Rspec
+module RSpec
   module LiveControllers
-    # Your code goes here...
   end
 end
