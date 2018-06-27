@@ -8,7 +8,15 @@ module RSpec
   module LiveControllers
     module Matchers
       def start_from_chunk(actual)
-        RSpec::LiveControllers::StartFromChunk.new(actual)
+        RSpec::LiveControllers::Matchers::StartFromChunk.new(actual)
+      end
+
+      def end_with_chunk(actual)
+        RSpec::LiveControllers::Matchers::EndWithChunk.new(actual)
+      end
+
+      def have_chunk(actual)
+        RSpec::LiveControllers::Matchers::HaveChunk.new(actual)
       end
     end
   end
