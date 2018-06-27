@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{RSpec matchers for live controller response}
   spec.description   = %q{RSpec matchers for live controller response}
-  spec.homepage      = "https://github.com/wilddima"
+  spec.homepage      = "https://github.com/wilddima/rspec-live_controllers"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
