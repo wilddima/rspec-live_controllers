@@ -2,7 +2,7 @@ module RSpec
   module LiveControllers
     module Matchers
       class Base
-        attr_reader :actual
+        attr_reader :actual, :body
 
 
         def initialize(actual)
@@ -10,7 +10,7 @@ module RSpec
         end
 
         def matches?(target)
-          body = extract_body(target)
+          @body = extract_body(target)
           row = target_row(actual)
           json = target_json(actual)
           string = target_string(actual)
@@ -18,11 +18,11 @@ module RSpec
         end
 
         def failure_message
-          'no'
+          raise 'Not implemented'
         end
 
         def failure_message_when_negated
-          'no to no'
+          raise 'Not implemented'
         end
 
         protected
