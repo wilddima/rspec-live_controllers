@@ -1,8 +1,6 @@
 # Rspec::LiveControllers
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rspec/live_controllers`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+RSpec matchers for `ActionController::Live`
 
 ## Installation
 
@@ -22,7 +20,31 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require 'rspec-live_controllers'
+
+RSpec.configure do |config|
+  config.include RSpec::LiveControllers
+end
+```
+
+matchers:
+
+```ruby
+subject { post :create }
+
+it 'has chunk of streamed response' do
+  expect(response.stream).to have_chunk([:processed, []])
+end
+
+it 'starts from chunk' do
+  expect(response.stream).to start_from_chunk([:processed, []])
+end
+
+it 'ends with chunk' do
+  expect(response.stream).to end_with_chunk([:processed, []])
+end
+```
 
 ## Development
 
