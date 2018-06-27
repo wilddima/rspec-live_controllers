@@ -10,10 +10,10 @@ module RSpec
         end
 
         def matches?(target)
-          body = extract_body(actual)
-          row = target_row(target)
-          json = target_json(target)
-          string = target_string(target)
+          body = extract_body(target)
+          row = target_row(actual)
+          json = target_json(actual)
+          string = target_string(actual)
           check_matches?(body, row, json, string)
         end
 
@@ -27,22 +27,22 @@ module RSpec
 
         protected
 
-        def target_json(target)
-          return unless target.respond_to?(:to_json)
-          target.to_json
+        def target_json(actual)
+          return unless actual.respond_to?(:to_json)
+          actual.to_json
         end
 
-        def target_string(target)
-          target.to_s
+        def target_string(actual)
+          actual.to_s
         end
 
-        def target_row(target)
-          return target if target.is_a?(String) || target.is_a?(Regexp)
+        def target_row(actual)
+          return actual if actual.is_a?(String) || actual.is_a?(Regexp)
         end
 
-        def extract_body(response)
-          if actual.is_a?(ActionDispatch::Response::Buffer)
-            response.instance_variable_get(:@buf)
+        def extract_body(target)
+          if target.is_a?(ActionDispatch::Response::Buffer)
+            target.instance_variable_get(:@buf)
           end
         end
 
