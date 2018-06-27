@@ -1,5 +1,7 @@
 # Rspec::LiveControllers
 
+[![Build Status](https://travis-ci.org/wilddima/rspec-live_controllers.svg?branch=master)](https://travis-ci.org/wilddima/rspec-live_controllers)
+
 RSpec matchers for `ActionController::Live`
 
 ## Installation
