@@ -42,7 +42,7 @@ module RSpec
 
         def extract_body(target)
           if target.is_a?(ActionDispatch::Response::Buffer)
-            target.instance_variable_get(:@buf)
+            target.instance_variable_get(:@buf).join('')
           end
         end
 

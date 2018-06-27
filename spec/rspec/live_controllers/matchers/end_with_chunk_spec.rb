@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe RSpec::LiveControllers::Matchers::EndWithChunk do
   let(:matcher) { described_class.new(actual) }
-  let(:stream) { '["hi"]["you"]' }
+  let(:stream) { ['["hi"]["you"]'] }
   let(:actual) { ['hi'] }
   let(:target) { ActionDispatch::Response::Buffer.new(nil, stream) }
 

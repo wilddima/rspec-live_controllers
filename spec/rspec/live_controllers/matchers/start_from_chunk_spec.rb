@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe RSpec::LiveControllers::Matchers::StartFromChunk do
   let(:matcher) { described_class.new(actual) }
   let(:target) { ActionDispatch::Response::Buffer.new(nil, stream) }
-  let(:stream) { '["hi"]["you"]' }
+  let(:stream) { ['["hi"]["you"]'] }
   let(:actual) { ['hi'] }
 
   describe '#matches?' do
