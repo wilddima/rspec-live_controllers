@@ -9,6 +9,8 @@
 .pryrc
 *.swp
 *.gem
+.DS_Store
+*.log
 
 # rspec failure tracking
 .rspec_status

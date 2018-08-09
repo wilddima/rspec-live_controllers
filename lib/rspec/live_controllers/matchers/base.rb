@@ -1,20 +1,13 @@
+# frozen_string_literal: true
+
 module RSpec
   module LiveControllers
     module Matchers
       class Base
-        attr_reader :actual_matcher, :response_body, :target_response, :list_of_matchers
+        attr_reader :actual_matcher, :target_response
 
         def initialize(actual_matcher)
           @actual_matcher = actual_matcher
-        end
-
-        def matches?(target_response)
-          @target_response = target_response
-          @response_body = extract_response_body(target_response)
-          row = target_response_row(actual_matcher)
-          json = target_response_json(actual_matcher)
-          string = target_response_string(actual_matcher)
-          check_matches?(response_body, row, json, string)
         end
 
         def failure_message
@@ -27,35 +20,8 @@ module RSpec
 
         protected
 
-        def target_response_json(actual_matcher)
-          return unless actual_matcher.respond_to?(:to_json)
-          actual_matcher.to_json
-        end
-
-        def target_response_string(actual_matcher)
-          actual_matcher.to_s
-        end
-
-        def target_response_row(actual_matcher)
-          return actual_matcher if actual_matcher.is_a?(String) || actual_matcher.is_a?(Regexp)
-        end
-
-        def extract_response_body(target_response)
-          if target_response.is_a?(ActionDispatch::Response::Buffer)
-            target_response.instance_variable_get(:@buf).join('')
-          end
-        end
-
-        def regexp(reg)
-          raise 'Not implemented'
-        end
-
-        def check_matches?(response_body, *matchers)
-          @list_of_matchers = matchers.compact
-          list_of_matchers.reduce(false) do |acc, value|
-            reg = Regexp.quote(value)
-            acc ||= response_body.match?(regexp(reg))
-          end
+        def writed_to_buffer
+          ActionController::Live::Buffer._writed_to_buffer
         end
       end
     end
