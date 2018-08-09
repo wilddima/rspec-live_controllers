@@ -35,16 +35,20 @@ matchers:
 ```ruby
 subject { post :create }
 
-it 'has chunk of streamed response' do
-  expect(response.stream).to have_chunk([:processed, []])
+it 'writes to stream' do
+  expect { subject }.to write_to_stream('1')
 end
 
-it 'starts from chunk' do
-  expect(response.stream).to start_from_chunk([:processed, []])
+it 'writes to stream' do
+  expect { subject }.to write_to_stream('1').at_least(1).times
 end
 
-it 'ends with chunk' do
-  expect(response.stream).to end_with_chunk([:processed, []])
+it 'writes to stream' do
+  expect { subject }.to write_to_stream('1').at_most(1).times
+end
+
+it 'writes to stream' do
+  expect { subject }.to write_to_stream('1').exactly(1).times
 end
 ```
 
